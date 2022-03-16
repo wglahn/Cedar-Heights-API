@@ -1,5 +1,3 @@
-from ctypes import sizeof
-from pyexpat import model
 from app import db, login
 from flask_login import UserMixin
 from datetime import datetime as dt, timedelta
@@ -59,10 +57,24 @@ class User(UserMixin, db.Model):
         self.email = data['email']
         self.password = self.hash_password(data['password'])
 
+    def to_dict(self):
+        return {
+            "user_id": self.id,
+            "email": self.email,
+            "created_on":self.created_on,
+            "first_name":self.first_name,
+            "last_name":self.last_name,
+            "token":self.token
+            }
+
     # saves the user to the database
     def save(self):
         db.session.add(self) # add the user to the db session
         db.session.commit() #save everything in the session to the database
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 @login.user_loader
 def load_user(id):
@@ -76,11 +88,12 @@ class Home(db.Model):
     manufacturer = db.Column(db.String)
     size = db.Column(db.String)
     location = db.Column(db.String)
-    price = db.Column(db.Float)
+    price = db.Column(db.String)
     desc = db.Column(db.Text)
     created_on = db.Column(db.DateTime, default=dt.utcnow)
-    sold_on = db.Column(db.DataTime)
+    sold_on = db.Column(db.DateTime)
     category_id = db.Column(db.ForeignKey('category.id'))
+    images = db.relationship('Image', cascade='all, delete-orphan', backref="home", lazy="dynamic")
 
     def __repr__(self):
         return f'<Item: {self.id} | {self.model}>'
@@ -145,28 +158,26 @@ class Category(db.Model):
         }
         return data
 
-class HomeImage(db.Model):
+class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    location = db.Column(db.String)
     order = db.Column(db.Integer)
     home_id = db.Column(db.ForeignKey('home.id'))
 
     def __repr__(self):
-        return f'<Item: {self.id} | {self.title}>'
+        return f'<Image: {self.id} | {self.title}>'
 
     def to_dict(self):
         data={
             'id':self.id,
             'title':self.title,
-            'location':self.location,
             'order':self.order,
             'home_id':self.home_id
         }
         return data
 
     def from_dict(self, data):
-        for field in ["title","location","order","home_id"]:
+        for field in ["title","order","home_id"]:
             if field in data:
                 # the object, the attribute, value
                 setattr(self, field, data[field])
@@ -195,23 +206,28 @@ class Application(db.Model):
     zip = db.Column(db.String)
     landlord = db.Column(db.String)
     landlord_phone = db.Column(db.String)
+    rental_duration = db.Column(db.String)
     rental_ref = db.Column(db.Text)
     credit_ref = db.Column(db.Text)
+    employer = db.Column(db.Text)
+    employer_phone = db.Column(db.Text)
+    monthly_income = db.Column(db.Float)
+    employed_duration = db.Column(db.Text)
     question1 = db.Column(db.Boolean)
     question2 = db.Column(db.Boolean)
     question3 = db.Column(db.Boolean)
     question4 = db.Column(db.Boolean)
     question5 = db.Column(db.Boolean)
     question6 = db.Column(db.Boolean)
-    desc = db.Column(db.Text)
+    question_desc = db.Column(db.Text)
     created_on = db.Column(db.DateTime, default=dt.utcnow)
     signature = db.Column(db.Text)
-    reviewed_on = db.Column(db.DataTime)
+    reviewed_on = db.Column(db.DateTime)
     is_approved = db.Column(db.Boolean)
     reason = db.Column(db.Text)
 
     def __repr__(self):
-        return f'<Item: {self.id} | {self.last_name}>'
+        return f'<Application: {self.id} | {self.last_name}>'
 
     def to_dict(self):
         data={
@@ -230,7 +246,13 @@ class Application(db.Model):
             'zip':self.zip,
             'landlord':self.landlord,
             'landlord_phone':self.landlord_phone,
+            'rental_duration':self.rental_duration,
+            'why_leave':self.why_leave,
             'rental_ref':self.rental_ref,
+            'employer':self.employer,
+            'employer_phone':self.employer_phone,
+            'monthly_income':self.monthly_income,
+            'employed_duration':self.employed_duration,
             'credit_ref':self.credit_ref,
             'question1':self.question1,
             'question2':self.question2,
@@ -238,7 +260,7 @@ class Application(db.Model):
             'question4':self.question4,
             'question5':self.question5,
             'question6':self.question6,
-            'desc':self.desc,
+            'question_desc':self.desc,
             'created_on':self.created_on,
             'signature':self.signature,
             'reviewed_on':self.reviewed_on,
@@ -250,9 +272,11 @@ class Application(db.Model):
     def from_dict(self, data):
         for field in ["first_name","last_name","birth_date","ss_num","dl_num", \
             "phone_num","children","pets","address","city","state","zip", \
-            "landlord","landlord_phone","rental_ref","credit_ref","question1", \
-            "question2","question3","question4","question5","question6","desc" \
-            "created_on","signature","reviewed_on","is_approved","reason"]:
+            "landlord","landlord_phone","rental_duration","why_leave","rental_ref", \
+            "employer","employer_phone","monthly_income","employed_duration", \
+            "credit_ref","question1","question2","question3","question4", \
+            "question5","question6","question_desc","created_on","signature", \
+            "reviewed_on","is_approved","reason"]:
             if field in data:
                 # the object, the attribute, value
                 setattr(self, field, data[field])

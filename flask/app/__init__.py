@@ -38,7 +38,7 @@ def create_app(config_class=Config):
     # from .blueprints.main import bp as main_bp
     # app.register_blueprint(main_bp)
 
-    # from .blueprints.api import bp as api_bp
-    # app.register_blueprint(api_bp)
+    from .blueprints.api import bp as api_bp
+    app.register_blueprint(api_bp)
     
     return app

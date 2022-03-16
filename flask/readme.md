@@ -1,1 +1,1 @@
-# Cedar Heights Web Application
+# Cedar Heights Flask Application
