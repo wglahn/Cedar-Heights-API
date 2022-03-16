@@ -106,10 +106,10 @@ def get_homes_by_cat(id):
 #     "model":"string",
 #     "manufacturer":"string",
 #     "size":"string",
-#     "location","string",
-#     "price","string",
-#     "desc","string",
-#     "sold_on","date",    
+#     "location":"string",
+#     "price":"string",
+#     "desc":"string",
+#     "sold_on":"date",    
 #     "category_id":"int"
 # }
 @api.post("/home")
@@ -118,7 +118,7 @@ def get_homes_by_cat(id):
 def post_home():
     home_dict = request.get_json()
     if not all(key in home_dict for key in ('vin','model','manufacturer','size', \
-        'location','price','desc','sold_on','category_id')):
+        'location','price','desc','category_id')):
         abort(400)
     home = Home()
     home.from_dict(home_dict)
@@ -190,7 +190,7 @@ def get_images_by_home(id):
 @require_admin
 def post_image():
     image_dict = request.get_json()
-    if not all(key in image_dict for key in ('title','order','home_id')):
+    if not all(key in image_dict for key in ('title','order','url','home_id')):
         abort(400)
     image = Image()
     image.from_dict(image_dict)

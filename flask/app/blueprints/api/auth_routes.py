@@ -1,7 +1,6 @@
 from . import bp as api
 from app.models import User
-# from app.blueprints.auth.auth import basic_auth, token_auth
-from flask import make_response, g, abort,request
+from flask import make_response, g, abort, request
 from helpers import require_admin
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 

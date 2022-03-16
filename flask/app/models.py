@@ -162,6 +162,7 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     order = db.Column(db.Integer)
+    url = db.Column(db.String)
     home_id = db.Column(db.ForeignKey('home.id'))
 
     def __repr__(self):
@@ -172,12 +173,13 @@ class Image(db.Model):
             'id':self.id,
             'title':self.title,
             'order':self.order,
+            'url':self.url,
             'home_id':self.home_id
         }
         return data
 
     def from_dict(self, data):
-        for field in ["title","order","home_id"]:
+        for field in ["title","order","url","home_id"]:
             if field in data:
                 # the object, the attribute, value
                 setattr(self, field, data[field])
