@@ -91,12 +91,12 @@ class Home(db.Model):
     price = db.Column(db.String)
     desc = db.Column(db.Text)
     created_on = db.Column(db.DateTime, default=dt.utcnow)
-    sold_on = db.Column(db.DateTime)
+    year = db.Column(db.Integer)
     category_id = db.Column(db.ForeignKey('category.id'))
     images = db.relationship('Image', cascade='all, delete-orphan', backref="home", lazy="dynamic")
 
     def __repr__(self):
-        return f'<Item: {self.id} | {self.model}>'
+        return f'<Home: {self.id} | {self.model}>'
 
     def to_dict(self):
         data={
@@ -109,13 +109,14 @@ class Home(db.Model):
             'price':self.price,
             'desc':self.desc,
             'created_on':self.created_on,
-            'sold_on':self.sold_on,
-            'category_id':self.category_id
+            'year':self.year,
+            'category_id':self.category_id,
+            'images':[i.to_dict() for i in self.images]
         }
         return data
 
     def from_dict(self, data):
-        for field in ["vin","model","manufacturer","size","location","price","desc","sold_on","category_id"]:
+        for field in ["vin","model","manufacturer","size","location","price","desc","year","category_id"]:
             if field in data:
                 # the object, the attribute, value
                 setattr(self, field, data[field])

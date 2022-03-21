@@ -6,9 +6,6 @@ from app.models import *
 from helpers import require_admin
 import os
 
-
-
-
 ############
 ##
 ##  CATEGORY API ROUTES
@@ -109,7 +106,7 @@ def get_homes_by_cat(id):
 #     "location":"string",
 #     "price":"string",
 #     "desc":"string",
-#     "sold_on":"date",    
+#     "year":"int",    
 #     "category_id":"int"
 # }
 @api.post("/home")
@@ -118,7 +115,7 @@ def get_homes_by_cat(id):
 def post_home():
     home_dict = request.get_json()
     if not all(key in home_dict for key in ('vin','model','manufacturer','size', \
-        'location','price','desc','category_id')):
+        'location','price','desc','year','category_id')):
         abort(400)
     home = Home()
     home.from_dict(home_dict)
@@ -154,11 +151,11 @@ def delete_home(id):
 ############
 
 # Get all images
-# @api.get('/image')
-# def get_image():
-#     images = Image.query.all()   
-#     images_dicts = [image.to_dict() for image in images]
-#     return make_response({"images":images_dicts},200)
+@api.get('/image')
+def get_images():
+    images = Image.query.all()   
+    images_dicts = [image.to_dict() for image in images]
+    return make_response({"images":images_dicts},200)
 
 # Get first ordered image associated with a home id
 @api.get('/image/<int:id>')
@@ -178,7 +175,7 @@ def get_images_by_home(id):
     all_images_of_home = [image.to_dict() for image in images]
     return make_response({"images":all_images_of_home}, 200)
 
-# Create a image
+# Create an image
 # {
     # 'id':self.id,
     # 'title':self.title,
