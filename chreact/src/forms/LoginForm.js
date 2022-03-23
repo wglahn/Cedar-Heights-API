@@ -7,8 +7,6 @@ import {AppContext} from '../context/AppContext';
 import useLogin from '../hooks/useLogin';
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
-
 
 const FormSchema = Yup.object(
     {
@@ -24,19 +22,14 @@ const initialValues ={
 
 
 export default function LoginForm() {
-    const {user, setUser,setAlert} = useContext(AppContext);
+    const {setUser} = useContext(AppContext);
     const [loginCreds, setLoginCreds] = useState({})
     const [error, setError] = useState('')
 
     useLogin(loginCreds, setError, setUser, setLoginCreds)
-    const navigate = useNavigate()
 
     const handleSubmit=async (values)=>{
         setLoginCreds(values)
-        if (user.token) {
-            setAlert({msg:`Welcome ${user.first_name}`,cat:'success'})
-            navigate('/')
-        }
     }
 
 

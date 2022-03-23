@@ -20,6 +20,23 @@ export const getHomes = async (cancelToken) =>{
     }
 }
 
+export const getHome = async (id, cancelToken) =>{
+    let error;
+    let home;
+
+    const response = await apiClientNoAuth(cancelToken).get(endpoint + '/'+ id);
+    if (response.ok){
+        home=response.data
+    }else{
+        error = 'An Unexpected Error has Occured. Please Try Again'
+    }
+    
+    return{
+        error,
+        home
+    }
+}
+
 export const postHome = async(token, vin, model, manufacturer, size, location, price, desc, year, category_id, cancelToken)=>{
     const response = await apiClientTokenAuth(token).post(endpoint,{vin:vin,model:model,manufacturer:manufacturer,size:size,location:location,price:price,desc:desc,year:year,category_id:category_id});
     console.log(response)

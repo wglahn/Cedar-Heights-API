@@ -64,7 +64,8 @@ class User(UserMixin, db.Model):
             "created_on":self.created_on,
             "first_name":self.first_name,
             "last_name":self.last_name,
-            "token":self.token
+            "token":self.token,
+            "is_admin":self.is_admin
             }
 
     # saves the user to the database

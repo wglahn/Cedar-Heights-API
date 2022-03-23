@@ -37,17 +37,32 @@ const FormSchema = Yup.object({
 
 export default function HomeForm() {
     const {categories, catError} = useCategories();
-    const {homes,setHomes} = useHomes();
+    const {homes} = useHomes();
     const navigate = useNavigate()
 
     const [newHome, setNewHome] = useState({})
     const [editHome, setEditHome] = useState({})
     const [deleteHome, setDeleteHome] = useState({})
     const [listClick, setlistClick] = useState({})
+    const [homeList, setHomeList] = useState([])
 
     useCreateHome(newHome)
     useEditHome(editHome)
     useDeleteHome(deleteHome)
+
+    React.useEffect(()=>{
+        setHomeList(homes)
+    },[homes])
+
+    React.useEffect(()=>{
+        if(deleteHome?.id){
+            setHomeList((prev)=>
+            
+                 (prev !== homeList)? homeList.filter((home)=>home.id !== deleteHome.id) : homeList
+            
+            )
+            };
+    },[deleteHome.id,homeList])
 
     const initialValues={
         id:listClick?.id ?? '',
@@ -68,8 +83,8 @@ export default function HomeForm() {
         }else {
             setNewHome(values);
             resetForm(initialValues);
+            setHomeList([...homeList,values]);
         }
-        setHomes()
     }
 
     const formik = useFormik({
@@ -81,7 +96,9 @@ export default function HomeForm() {
     })
         
     const handleDelete=()=>{
-        setDeleteHome(listClick)
+
+        setDeleteHome(listClick);
+
     }
 
     const handleListItemClick = (selected_home) => {
@@ -96,7 +113,7 @@ export default function HomeForm() {
                 <Grid item xs={6}>
                     <Box sx={{ border:1, mt:2, width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
                         <List component="nav" aria-label="secondary mailbox folder">
-                            {homes?.map((select_home) => (
+                            {homeList?.map((select_home) => (
                             <React.Fragment key={JSON.stringify(select_home.id)+'e'}>
                             <Grid key={JSON.stringify(select_home.id)+'d'} container sx={{ display: 'flex', alignItems: 'center'}}>
                                 <ListItemButton

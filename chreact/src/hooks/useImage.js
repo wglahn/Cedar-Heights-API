@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react';
 import {getImages} from '../api/apiImage';
-import {CancelToken} from 'apisauce'
+import {CancelToken} from 'apisauce';
 
 export default function useImages() {
   const [images, setImages] = useState([])

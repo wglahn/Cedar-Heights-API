@@ -10,7 +10,6 @@ export default function useImages(id) {
           const source = CancelToken.source();
           const getImages=async()=>{
               const response = await getImagesByHome(id, source.token)
-              console.log(response)
               setImages(response)
           }
           getImages()

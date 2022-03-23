@@ -38,7 +38,6 @@ export default function ButtonAppBar({children}) {
   }
 
   function loggedIn(){
-    
     return [
       <MenuItem key='home' onClick={handleClose}><Link to="/HomeForm" className="nav-link">Homes</Link></MenuItem>,
       <MenuItem key='categories' onClick={handleClose}>Categories</MenuItem>,
@@ -47,7 +46,6 @@ export default function ButtonAppBar({children}) {
   }
 
   function loggedOut(){
-    
     return <MenuItem key='login' onClick={handleClose}><Link to="/LoginForm" className="nav-link">Login</Link></MenuItem>
   }
 
@@ -64,27 +62,32 @@ export default function ButtonAppBar({children}) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <StyledToolbar>
+          <Box >
           <IconButton sx={{ px: 1 }}>
-            <Link to="/" className="nav-link"><Avatar alt="Cedar Heights Logo" src="https://res.cloudinary.com/dslbd7ifs/image/upload/v1647575971/CHLogo_qb6vdr.png" /></Link>
+            <Link to="/" className="nav-link"><Avatar sx={{width: 90, height:90}} alt="Cedar Heights Logo" src="https://res.cloudinary.com/dslbd7ifs/image/upload/v1647575971/Cedar%20Heights/CHLogo_qb6vdr.png" /></Link>
           </IconButton>
+          </Box>
           <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-            Cedar Heights Housing Community
-                <Typography
-                  variant="h5"
-                  noWrap
-                  component="div"
-                  sx={{ display: 'flex', alignItems: 'center', pt:1.5 }}
-                >
-                  <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-                  <Link to="/HomeList" className="nav-link">Inventory</Link>
-                  <WarehouseIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
-                  <Link to="/" className="nav-link">Storage Solutions</Link>
-                  <ArticleIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
-                  <Link to="/" className="nav-link">Apply Online</Link>
-                  <ContactlessIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
-                  <Link to="/" className="nav-link">Contact Us</Link>
-                </Typography>
+            Cedar Heights 
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+              Housing Community
+            </Typography>
           </Typography>
+            <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ display: 'flex', alignItems: 'center', justifyContent:"flex-end", mt: 7, pt:1.5 }}
+              >
+              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Link to="/HomeList" className="nav-link">Inventory</Link>
+              <WarehouseIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
+              <Link to="/StorageUnits" className="nav-link">Storage Solutions</Link>
+              <ArticleIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
+              <Link to="/AppForm" className="nav-link">Apply Online</Link>
+              <ContactlessIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
+              <Link to="/" className="nav-link">Contact Us</Link>
+            </Typography>
           <div>
               <IconButton
                 size="large"
@@ -111,7 +114,7 @@ export default function ButtonAppBar({children}) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {user?.token ? loggedIn() : loggedOut()}
+                {user?.is_admin ? loggedIn() : loggedOut()}
 
               </Menu>
             </div>

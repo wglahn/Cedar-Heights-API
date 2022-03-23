@@ -4,16 +4,8 @@ import { useFormik } from 'formik';
 import Button from "../components/Button";
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import useHomes from '../hooks/useHomes';
 import useImages from '../hooks/useImages';
-// import useCategories from '../hooks/useCategories';
 import useCreateImage from '../hooks/useCreateImage';
-// import useEditHome from '../hooks/useEditHome';
 import useDeleteImage from '../hooks/useDeleteImage';
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper';
@@ -23,6 +15,9 @@ import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
 
 const FormSchema = Yup.object({
     "title":Yup.string().required("Required"),
@@ -32,9 +27,9 @@ const FormSchema = Yup.object({
 })
 
 export default function HomeForm() {
-    const {homes} = useHomes();
     const { id } = useParams();
     const {images} = useImages(id);
+    const navigate = useNavigate()
 
     const [listClick, setListClick] = useState({})
     const [newImage, setNewImage] = useState({})
@@ -75,7 +70,7 @@ export default function HomeForm() {
     };
 
   return (
-    <Box sx={{ mx: 'auto', width: 1200, mt: 5}}>
+    <Box sx={{ mx: 'auto', width: 1200, my: 5}}>
         <Paper elevation={3} sx={{p:2}}>
             
             <Grid container spacing={1}>
@@ -138,7 +133,7 @@ export default function HomeForm() {
                         />
 
 
-                        <Button type="submit" sx={{ width: "100%", my:1 }}>Save Image</Button>
+                        <Button type="submit" sx={{ width: "100%", my:1 }}>Save New Image</Button>
                     </form>
                 </Grid>
                 <Grid item xs={4}>
@@ -152,6 +147,11 @@ export default function HomeForm() {
                         />
                     </Card>
                         <Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:3}}>Delete Image</Button>
+                        <Box display="flex" justifyContent="flex-end">
+                            <IconButton onClick={()=>navigate('/HomeForm/')} justify="flex-end">
+                                <CloseIcon />
+                            </IconButton>
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>
