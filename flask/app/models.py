@@ -84,7 +84,7 @@ def load_user(id):
 
 class Home(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    vin = db.Column(db.String)
+    vin = db.Column(db.String, unique=True)
     model = db.Column(db.String)
     manufacturer = db.Column(db.String)
     size = db.Column(db.String)

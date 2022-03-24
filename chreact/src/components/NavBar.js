@@ -40,7 +40,7 @@ export default function ButtonAppBar({children}) {
   function loggedIn(){
     return [
       <MenuItem key='home' onClick={handleClose}><Link to="/HomeForm" className="nav-link">Homes</Link></MenuItem>,
-      <MenuItem key='categories' onClick={handleClose}>Categories</MenuItem>,
+      <MenuItem key='units' onClick={handleClose}>Units</MenuItem>,
       <MenuItem key='logout' onClick={handleLogout}><Link to="/" className="nav-link">Logout</Link></MenuItem>
     ]
   }

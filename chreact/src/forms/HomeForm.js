@@ -24,7 +24,7 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 const FormSchema = Yup.object({
-    "vin":Yup.string(),
+    "vin":Yup.string().required("Required"),
     "manufacturer":Yup.string().required("Required"),
     "model":Yup.string().required("Required"),
     "size":Yup.string().required("Required"),
@@ -55,14 +55,14 @@ export default function HomeForm() {
     },[homes])
 
     React.useEffect(()=>{
-        if(deleteHome?.id){
-            setHomeList((prev)=>
+        if(deleteHome?.vin){
+            setHomeList(
             
-                 (prev !== homeList)? homeList.filter((home)=>home.id !== deleteHome.id) : homeList
+                homeList.filter((home)=>home.vin !== deleteHome.vin)
             
             )
             };
-    },[deleteHome.id,homeList])
+    },[deleteHome.vin,homeList])
 
     const initialValues={
         id:listClick?.id ?? '',
