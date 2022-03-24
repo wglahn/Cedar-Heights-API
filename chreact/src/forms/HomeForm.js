@@ -57,9 +57,7 @@ export default function HomeForm() {
     React.useEffect(()=>{
         if(deleteHome?.vin){
             setHomeList(
-            
                 homeList.filter((home)=>home.vin !== deleteHome.vin)
-            
             )
             };
     },[deleteHome.vin,homeList])

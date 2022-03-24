@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 export default function HomePage() {
     
   return (
+    <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:'100%'}}>
     <Grid container spacing={4} sx={{ mx: 25, my: 10}}>
       <Grid item >
           <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:"100%"}}>
@@ -17,10 +18,11 @@ export default function HomePage() {
             Welcome To Our Community
           </Typography>
           <Typography variant="h2" sx={{display:"flex", alignContent:"center", justifyContent:"flex-start", width:"100%"}}>
-            Discover Your New Home
+            Discover Your Home
           </Typography>
       </Grid>
     </Grid>
+    </Box>
   )
 }
 

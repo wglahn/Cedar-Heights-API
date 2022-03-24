@@ -10,6 +10,7 @@ import HomeList from './components/HomeList';
 import Home from './components/Home';
 import AppForm from './forms/AppForm';
 import StorageUnits from './views/StorageUnits';
+import ContactUs from './forms/ContactUs';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <Route path="/ImageForm/:id" element={<ImageForm />} />
           <Route path="/AppForm" element={<AppForm />} />
           <Route path="/StorageUnits" element={<StorageUnits />} />
-
+          <Route path="/ContactUs" element={<ContactUs />} />
         </Routes>
       </NavBar>
     </Router>

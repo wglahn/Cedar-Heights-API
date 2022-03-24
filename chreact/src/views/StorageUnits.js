@@ -31,69 +31,70 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  {size:"10' x 20'",area:"200 sqft",door:"9'W x 8'H",price:"$65.00"},
+  {size:"10' x 25'",area:"250 sqft",door:"9'W x 8'H",price:"$70.00"},
+  {size:"12' x 20'",area:"240 sqft",door:"10'W x 13'H",price:"$75.00"},
+  {size:"12' x 30'",area:"360 sqft",door:"10'W x 13'H",price:"$105.00"},
+  {size:"12' x 50'",area:"600 sqft",door:"10'W x 13'H",price:"$165.00"},
 ];
 
 export default function CustomizedTables() {
   return (
     <>
-    <Grid container spacing={4} sx={{ mx: 25, my: 10}}>
+    <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:'100%'}}>
+     <Grid container sx={{ mx: 9, my: 5}}>
+       <Grid item sx={{width:850}}>
+          <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:'100%'}}>
+              <Typography variant="h4" sx={{display:"flex", alignContent:"center", justifyContent:"flex-start", width:'100%'}}>
+                We offer mutliple options for your storage needs.  
+                All units are equipped with an anti-drip roof lining,
+                keeping your valuables safe from condensation.
+              </Typography>
+          </Box>
+        </Grid>
+    </Grid>
+    </Box>
+    <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:'100%'}}>
+    <Grid container spacing={2} sx={{ mx: 4, mb: 5}}>
       <Grid item >
-          <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:"100%"}}>
-            <img src='https://res.cloudinary.com/dslbd7ifs/image/upload/v1648090263/Cedar%20Heights/storage1_a6ogke.jpg' alt='cedar icon' height='250'/>
+            <Paper elevation={1} sx={{height:'320'}}>
+          <Box sx={{display:"flex", alignContent:"center", justifyContent:"center", width:'100%'}}>
+              <img src='https://res.cloudinary.com/dslbd7ifs/image/upload/v1648090263/Cedar%20Heights/storage1_a6ogke.jpg' alt='storage units' height='320'/>
+          </Box>
+            </Paper>
+      </Grid>
+      <Grid item sx={{width: 500}}>
+          <Box sx={{display:"flex", alignContent:"center", justifyContent:"flex-start", width:'100%'}}>
+            <TableContainer component={Paper}>
+              <Table  aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="left">Size</StyledTableCell>
+                    <StyledTableCell align="left">Area&nbsp;(sqft)</StyledTableCell>
+                    <StyledTableCell align="left">Door Dimensions</StyledTableCell>
+                    <StyledTableCell align="left">Price&nbsp;(per month)</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <StyledTableRow key={row.size}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.size}
+                      </StyledTableCell>
+                      <StyledTableCell align="left">{row.area}</StyledTableCell>
+                      <StyledTableCell align="left">{row.door}</StyledTableCell>
+                      <StyledTableCell align="left">{row.price}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
       </Grid>
-      <Grid item sx={{my: 7}}>
-          <Typography variant="h2" sx={{display:"flex", alignContent:"center", justifyContent:"flex-start", width:"100%"}}>
-            Welcome To Our Community
-          </Typography>
-          <Typography variant="h2" sx={{display:"flex", alignContent:"center", justifyContent:"flex-start", width:"100%"}}>
-            Discover Your New Home
-          </Typography>
-      </Grid>
     </Grid>
+    </Box>
 
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
     </>
   );
 }

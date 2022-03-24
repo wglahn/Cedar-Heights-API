@@ -41,6 +41,7 @@ export default function ButtonAppBar({children}) {
     return [
       <MenuItem key='home' onClick={handleClose}><Link to="/HomeForm" className="nav-link">Homes</Link></MenuItem>,
       <MenuItem key='units' onClick={handleClose}>Units</MenuItem>,
+      <MenuItem key='contacts' onClick={handleClose}>Contacts</MenuItem>,
       <MenuItem key='logout' onClick={handleLogout}><Link to="/" className="nav-link">Logout</Link></MenuItem>
     ]
   }
@@ -86,7 +87,7 @@ export default function ButtonAppBar({children}) {
               <ArticleIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
               <Link to="/AppForm" className="nav-link">Apply Online</Link>
               <ContactlessIcon sx={{ mr: 0.5, ml:2 }} fontSize="inherit" />
-              <Link to="/" className="nav-link">Contact Us</Link>
+              <Link to="/ContactUs" className="nav-link">Contact Us</Link>
             </Typography>
           <div>
               <IconButton
